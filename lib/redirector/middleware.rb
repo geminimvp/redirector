@@ -19,7 +19,8 @@ module Redirector
       end
 
       def response
-        if redirect? && redirect_for_current_store?
+        # if redirect? && redirect_for_current_store?
+        if redirect?
           redirect_response
         else
           app.call(env)
@@ -32,7 +33,7 @@ module Redirector
         store = Spree::Store.find_by(url: env['HTTP_HOST'])
         rule = RedirectRule.match_for(request_path, env)
         # store&.team.id == rule&.team_id
-        Rail.logger.info "************ #{env['HTTP_HOST']}"
+        Rails.logger.info "************ #{env['HTTP_HOST']}"
         store.team_id == rule.team_id
       end
 
